@@ -40,8 +40,8 @@ func loadAppConfig() *AppConfig {
 	appHost := os.Getenv("APP_HOST")
 
 	postgresDB := os.Getenv("POSTGRES_DB")
-	postgresUser := os.Getenv("POSTGRES_DB")
-	postgresPassword := os.Getenv("POSTGRES_DB")
+	postgresUser := os.Getenv("POSTGRES_USER")
+	postgresPassword := os.Getenv("POSTGRES_PASSWORD")
 	postgresPortRaw := os.Getenv("POSTGRES_PORT")
 	postgresPort, postgresPortErr := strconv.Atoi(postgresPortRaw)
 	if postgresPortErr != nil {
