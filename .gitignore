@@ -1,0 +1,48 @@
+# --- OS / editor noise ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Env and local secrets ---
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# --- Build artifacts ---
+bin/
+build/
+dist/
+tmp/
+
+# --- Go binaries / test output ---
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+coverage.out
+coverage.html
+
+# --- Go workspace (often local-only for multi-module dev) ---
+go.work
+go.work.sum
+
+# --- Runtime / local data ---
+*.log
+*.pid
+*.seed
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Debugging artifacts ---
+__debug_bin
+
+# --- Dependency directory (uncomment if you do not commit vendor) ---
+# vendor/
