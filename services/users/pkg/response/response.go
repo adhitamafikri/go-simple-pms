@@ -20,3 +20,15 @@ type Paginated[T any] struct {
 	Data    []T            `json:"data"`
 	Meta    PaginationMeta `json:"meta"`
 }
+
+func OK[T any](data T, message string) Base[T] {
+	return Base[T]{Version: Version, Message: message, Data: data}
+}
+
+func Created[T any](data T, message string) Base[T] {
+	return Base[T]{Version: Version, Message: message, Data: data}
+}
+
+func WithPagination[T any](data []T, message string, meta PaginationMeta) Paginated[T] {
+	return Paginated[T]{Version: Version, Message: message, Data: data, Meta: meta}
+}
