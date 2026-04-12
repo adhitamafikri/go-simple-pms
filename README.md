@@ -16,6 +16,7 @@ This project is created for learning extensively about Go, DDD, along with its i
 - Gin Gonic -> [github.com/gin-gonic/gin](github.com/gin-gonic/gin)
 - JWT -> [https://github.com/golang-jwt/jwt](https://github.com/golang-jwt/jwt)
 - Postgres 8 -> via Docker and [https://github.com/jmoiron/sqlx](https://github.com/jmoiron/sqlx)
+- SQL migration -> [https://github.com/golang-migrate/migrate](https://github.com/golang-migrate/migrate) via Docker
 - Redis -> via Docker
 - Kafka -> via Docker
 - gRPC -> [https://github.com/grpc/grpc-go](https://github.com/grpc/grpc-go)
