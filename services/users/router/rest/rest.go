@@ -1,4 +1,4 @@
-package router
+package rest
 
 import (
 	"net/http"
@@ -8,6 +8,7 @@ import (
 
 type Router interface {
 	Ping(ctx *gin.Context)
+
 	ReadUsers(ctx *gin.Context)
 	ReadUserById(ctx *gin.Context)
 	CreateUser(ctx *gin.Context)
@@ -29,17 +30,17 @@ type routerHandler struct {
 }
 
 func RegisterRoute(engine *gin.Engine, router *routerHandler) *gin.Engine {
-	r := gin.Default()
-	r.GET("ping", router.Ping)
+	engine.GET("ping", router.Ping)
 
-	gUsers := r.Group("users")
+	gUsers := engine.Group("users")
 	gUsers.GET("", router.ReadUsers)
 	gUsers.GET("/:id", router.ReadUserById)
 	gUsers.POST("", router.CreateUser)
 	gUsers.PUT("/:id", router.UpdateUser)
 	gUsers.DELETE("/:id", router.DeleteUser)
+	gUsers.GET("/me", router.ReadMe)
 
-	gRoles := r.Group("roles")
+	gRoles := engine.Group("roles")
 	gRoles.GET("", router.ReadRoles)
 	gRoles.GET("/:id", router.ReadRoleById)
 	gRoles.POST("", router.CreateRole)
@@ -48,7 +49,7 @@ func RegisterRoute(engine *gin.Engine, router *routerHandler) *gin.Engine {
 
 	gUsers.PUT("/:id/roles", router.AssignRole)
 
-	return r
+	return engine
 }
 
 func NewRouter() *routerHandler {
@@ -88,6 +89,12 @@ func (r *routerHandler) UpdateUser(ctx *gin.Context) {
 }
 
 func (r *routerHandler) DeleteUser(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) ReadMe(ctx *gin.Context) {
 	ctx.JSON(http.StatusNotImplemented, gin.H{
 		"message": "Not Implemented Yet",
 	})

@@ -3,8 +3,11 @@ module github.com/adhitamafikri/go-simple-pms/services/users
 go 1.26.0
 
 require (
+	github.com/adhitamafikri/go-simple-pms/pkg/logger v0.0.0-20260419120614-383df0753753
 	github.com/gin-gonic/gin v1.12.0
+	github.com/jmoiron/sqlx v1.4.0
 	github.com/joho/godotenv v1.5.1
+	github.com/lib/pq v1.10.9
 	github.com/rs/zerolog v1.35.0
 )
 

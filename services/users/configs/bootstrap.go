@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 
+	infrastructures "github.com/adhitamafikri/go-simple-pms/services/users/infrastructures/database"
 	"github.com/joho/godotenv"
 )
 
@@ -74,8 +75,22 @@ func Bootstrap() {
 	appConfig := loadAppConfig()
 
 	// Connect DB
-
-	// Load Routers
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s",
+		appConfig.POSTGRES_USER,
+		appConfig.POSTGRES_PASSWORD,
+		appConfig.APP_HOST,
+		appConfig.POSTGRES_PORT,
+		appConfig.POSTGRES_DB,
+		appConfig.POSTGRES_SSL_MODE,
+	)
+	db := infrastructures.NewPostgresConn(dsn)
+	// prepare repo
+	userRepo := nil
+	roleRepo := nil
+	// prepare usecase
+	userUsecase := nil
+	repoUsecase := nil
+	// prepare router
 	r := loadRestRouter()
 	addr := fmt.Sprintf("%s:%d", appConfig.APP_HOST, appConfig.APP_PORT)
 	r.Run(addr)

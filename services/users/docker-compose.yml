@@ -1,14 +1,20 @@
 services:
   postgres:
-    image: postgres
+    image: postgres:18
     container_name: gsp-users-postgres
     environments:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_PORT: 5442
-      POSTGRES_DB: gsp-users-postgres
+      # POSTGRES_USER: postgres
+      # POSTGRES_PASSWORD: postgres
+      # POSTGRES_PORT: 5440
+      # POSTGRES_DB: gsp-users-postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5440"
     volumes:
-      - gsp-users-pg-data
+      - gsp-users-pg-data:/var/lib/postgresql
 
 volumes:
   gsp-users-pg-data:
