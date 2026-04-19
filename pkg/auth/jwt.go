@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -26,7 +27,8 @@ type JWTClaims struct {
 
 type JWTAuth interface {
 	Hello()
-	CreateNewJWT(jwtKey string, claims JWTClaims) (string, error)
+	CreateNewJWT(jwtKey []byte, claims *JWTClaims) (string, error)
+	ParseAndVerifyJWT(jwtString string, jwtKey []byte) (bool, error)
 }
 
 type jwtAuth struct {
@@ -56,6 +58,23 @@ func (j *jwtAuth) CreateNewJWT(jwtKey []byte, claims *JWTClaims) (string, error)
 	return s, nil
 }
 
-// func VerifyJWT(jwtString string) bool {
-// 	jwt.Claim
-// }
+func (j *jwtAuth) ParseAndVerifyJWT(jwtString string, jwtKey []byte) (bool, error) {
+	res, err := jwt.Parse(
+		jwtString,
+		func(token *jwt.Token) (any, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("unexpected signing method: %s", token.Method.Alg())
+			}
+
+			return jwtKey, nil
+		},
+		jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}),
+		jwt.WithExpirationRequired(),
+	)
+
+	if err != nil {
+		return false, err
+	}
+
+	return res.Valid, nil
+}
