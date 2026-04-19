@@ -1,20 +1,21 @@
 package auth
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type TokenRole struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 type TokenExtras struct {
-	Roles []struct {
-		id   int
-		name string
-	} `json:"roles"`
-	UserId          int   `json:"userId"`
-	TeamIds         []int `json:"teamIds"`
-	BusinessUnitIds []int `json:"businessUnitIds"`
+	Roles           *[]TokenRole `json:"roles"`
+	UserId          int          `json:"user_id"`
+	TeamIds         []int        `json:"team_ids"`
+	BusinessUnitIds []int        `json:"business_unit_ids"`
 }
 
 type JWTClaims struct {
@@ -23,11 +24,20 @@ type JWTClaims struct {
 	Extras *TokenExtras `json:"extras"`
 }
 
-func Hello() {
-	fmt.Println("Hello From JWT lib")
+type JWTAuth interface {
+	Hello()
+	CreateNewJWT(jwtKey string, claims JWTClaims) (string, error)
 }
 
-func CreateNewJWT(jwtKey string, claims JWTClaims) string {
+type jwtAuth struct {
+	signed bool
+}
+
+func NewJWTAuth() *jwtAuth {
+	return &jwtAuth{signed: true}
+}
+
+func (j *jwtAuth) CreateNewJWT(jwtKey []byte, claims *JWTClaims) (string, error) {
 	now := time.Now()
 
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -40,10 +50,10 @@ func CreateNewJWT(jwtKey string, claims JWTClaims) string {
 
 	s, err := t.SignedString(jwtKey)
 	if err != nil {
-		panic("")
+		return "", err
 	}
 
-	return s
+	return s, nil
 }
 
 // func VerifyJWT(jwtString string) bool {
