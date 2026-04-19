@@ -13,6 +13,15 @@ type Router interface {
 	CreateUser(ctx *gin.Context)
 	UpdateUser(ctx *gin.Context)
 	DeleteUser(ctx *gin.Context)
+	ReadMe(ctx *gin.Context)
+
+	ReadRoles(ctx *gin.Context)
+	ReadRoleById(ctx *gin.Context)
+	CreateRole(ctx *gin.Context)
+	UpdateRole(ctx *gin.Context)
+	DeleteRole(ctx *gin.Context)
+
+	AssignRole(ctx *gin.Context)
 }
 
 type routerHandler struct {
@@ -23,12 +32,21 @@ func RegisterRoute(engine *gin.Engine, router *routerHandler) *gin.Engine {
 	r := gin.Default()
 	r.GET("ping", router.Ping)
 
-	group := r.Group("users")
-	group.GET("", router.ReadUsers)
-	group.GET("/:id", router.ReadUserById)
-	group.POST("", router.CreateUser)
-	group.PUT("/:id", router.UpdateUser)
-	group.DELETE("/:id", router.DeleteUser)
+	gUsers := r.Group("users")
+	gUsers.GET("", router.ReadUsers)
+	gUsers.GET("/:id", router.ReadUserById)
+	gUsers.POST("", router.CreateUser)
+	gUsers.PUT("/:id", router.UpdateUser)
+	gUsers.DELETE("/:id", router.DeleteUser)
+
+	gRoles := r.Group("roles")
+	gRoles.GET("", router.ReadRoles)
+	gRoles.GET("/:id", router.ReadRoleById)
+	gRoles.POST("", router.CreateRole)
+	gRoles.PUT("/:id", router.UpdateRole)
+	gRoles.DELETE("/:id", router.DeleteRole)
+
+	gUsers.PUT("/:id/roles", router.AssignRole)
 
 	return r
 }
@@ -70,6 +88,42 @@ func (r *routerHandler) UpdateUser(ctx *gin.Context) {
 }
 
 func (r *routerHandler) DeleteUser(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) ReadRoles(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) ReadRoleById(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) CreateRole(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) UpdateRole(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) DeleteRole(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotImplemented, gin.H{
+		"message": "Not Implemented Yet",
+	})
+}
+
+func (r *routerHandler) AssignRole(ctx *gin.Context) {
 	ctx.JSON(http.StatusNotImplemented, gin.H{
 		"message": "Not Implemented Yet",
 	})

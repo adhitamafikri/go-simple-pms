@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("This is the users service")
+	fmt.Println("Booting up 'users' service...")
 	configs.Bootstrap()
+	fmt.Println("'users' service running!!!...")
 }
