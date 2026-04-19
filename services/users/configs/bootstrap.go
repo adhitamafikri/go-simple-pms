@@ -63,8 +63,10 @@ func loadAppConfig() *AppConfig {
 }
 
 func loadRestRouter() gin.Engine {
-	// Load Rest Router
-	return *router.LoadRouter()
+	userRouter := router.NewRouter()
+	engine := gin.Default()
+
+	return *router.RegisterRoute(engine, userRouter)
 }
 
 func Bootstrap() {
